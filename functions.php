@@ -1,4 +1,17 @@
 <?php
+
+/**
+ * Include WP-CLI commands to alter users adn profiles relating to Buddypress
+ */
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once dirname( __FILE__ ) . '/commands/user.php';
+	require_once dirname( __FILE__ ) . '/commands/bp.php';
+}
+
+
+/**
+ * Set up the theme and functions related to Murrow Connect
+ */
 class WSU_MurrowConnect_Theme {
 	/**
 	 * Setup the hooks used in the theme.
@@ -9,6 +22,11 @@ class WSU_MurrowConnect_Theme {
 }
 new WSU_MurrowConnect_Theme();
 
+
+
+/**
+ * Set up json api extensions related to Murrow Connect
+ */
 function murrow_api_init() {
 	global $Murrow_api_bp_user;
 	$murrow_api_bp_user = new Murrow_API_BP_USER();
@@ -59,4 +77,7 @@ class Murrow_API_BP_USER {
 		var_dump('a user');die();
 	}
 }
+
+
+
 
