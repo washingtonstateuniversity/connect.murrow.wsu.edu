@@ -6,6 +6,7 @@
  * @source https://github.com/wp-cli/wp-cli/blob/master/php/commands/user.php
  * @package wp-cli
  */
+if(!class_exists('User_Command')){
 class User_Command extends \WP_CLI\CommandWithDBObject {
 
 	protected $obj_type = 'user';
@@ -762,7 +763,7 @@ class User_Command extends \WP_CLI\CommandWithDBObject {
 	}
 
 }
-
+}
 /**
  * Manage user custom fields.
  *
@@ -777,6 +778,7 @@ class User_Command extends \WP_CLI\CommandWithDBObject {
  *
  *     wp user meta update admin first_name "George"
  */
+if(!class_exists('User_Meta_Command')){
 class User_Meta_Command extends \WP_CLI\CommandWithMeta {
 	protected $meta_type = 'user';
 
@@ -875,7 +877,7 @@ class User_Meta_Command extends \WP_CLI\CommandWithMeta {
 	}
 
 }
-
+}
 /**
  * Manage user terms.
  *
@@ -884,8 +886,10 @@ class User_Meta_Command extends \WP_CLI\CommandWithMeta {
  *
  *     wp user term set 123 test category
  */
+if(!class_exists('User_Term_Command')){
 class User_Term_Command extends \WP_CLI\CommandWithTerms {
 	protected $obj_type = 'user';
+}
 }
 
 
