@@ -74,7 +74,7 @@ class Murrow_API_BP_USER {
 					'location' => array( 'lat' => "{$this->randomizeCord($lat)}",//"46.7" . $this->randomIntFromInterval(22,41) . $this->randomIntFromInterval(1111,9999),
 										'lon' => "{$this->randomizeCord($lng)}"//"-117.1" . $this->randomIntFromInterval(30,71) . $this->randomIntFromInterval(1111,9999)
 									   ),
-					'bio' => !empty($user['Bio'])?$user['Bio']:'<p>Curae massa vestibulum erat nisi a etiam ut bibendum posuere suspendisse dignissim id a fringilla porttitor ut ipsum.Ullamcorper ad torquent suspendisse at mi faucibus primis mattis hendrerit id adipiscing fringilla lacinia a interdum.Vulputate at parturient a ante nibh a rutrum curae urna in suspendisse pharetra consequat a adipiscing nunc sem scelerisque aliquet a eget a morbi mi nunc tellus lacinia ornare.Ultricies inceptos posuere et a ipsum auctor condimentum velit orci.</p>'
+					'bio' => !empty($user['Bio'])?$user['Bio']:'<p></p>'
 				);
 				
 				$field_id = xprofile_get_field_id_from_name( 'cached_profile_iw_object' );
