@@ -35,7 +35,11 @@ class Murrow_API_BP_USER {
 		// User Loop
 		$found_users = array();
 		if ( ! empty( $user_query->results ) ) {
-			$fields = array( 'First name', 'Last name', 'City', 'State', 'Country', 'Bio', 'cached_profile_iw_object' );
+			if(isset($_GET['fields'])){
+				$fields = array_merge( array( 'cached_profile_iw_object' ), explode( ',', $_GET['fields'] ) );
+			}else{
+				$fields = array( 'First name', 'Last name', 'City', 'State', 'Country', 'Bio', 'cached_profile_iw_object' );
+			}
 			foreach ( $user_query->results as $user ) {
 				$tmp_data = array();
 				$tmp_data['ID'] = $user->id;
@@ -70,8 +74,8 @@ class Murrow_API_BP_USER {
 					'city' => $user['City'],
 					'state' => $user['State'],
 					'country' => $user['Country'],
-					'location' => array( 'lat' => "{$this->randomizeCord($lat)}",//"46.7" . $this->randomIntFromInterval(22,41) . $this->randomIntFromInterval(1111,9999),
-										'lon' => "{$this->randomizeCord($lng)}"//"-117.1" . $this->randomIntFromInterval(30,71) . $this->randomIntFromInterval(1111,9999)
+					'location' => array( 'lat' => "{$this->randomizeCord($lat)}",
+										'lon' => "{$this->randomizeCord($lng)}"
 									   ),
 					'bio' => !empty($user['Bio'])?$user['Bio']:'<p></p>'
 				);
