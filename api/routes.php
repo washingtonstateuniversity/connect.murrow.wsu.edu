@@ -25,7 +25,6 @@ class Murrow_API_BP_USER {
 	}
 
 	public function get_users(){
-		global $bp, $wpdb;
 		$args = array( 
 			'role' => 'Subscriber'
 		);
