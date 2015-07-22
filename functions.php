@@ -6,7 +6,7 @@
 if ( defined( 'WP_CLI' ) && WP_CLI && !class_exists("BPCLI_Component")){
 	//not 100% on how, but seems that the the require_one is not resepected.  I think this
 	//may be related to the fact that the CLI and php are being used as two different threads
-	//not 100%
+	//not 100% but it happens when doing `wp` on the command line.
 	require_once dirname( __FILE__ ) . '/commands/wp-cli-bp.php';
 }
 
