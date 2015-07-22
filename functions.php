@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Include WP-CLI commands to alter users adn profiles relating to Buddypress
+ * Include WP-CLI commands to alter users and profiles relating to Buddypress
  */
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	if(!class_exists("BPCLI_Component")){
@@ -9,7 +9,11 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	}
 }
 
+/**
+ * Set up json api extensions related to Murrow Connect
+ */
 require_once dirname( __FILE__ ) . '/api/routes.php';
+
 /**
  * Set up the theme and functions related to Murrow Connect
  */
