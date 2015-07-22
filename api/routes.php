@@ -26,7 +26,7 @@ class Murrow_API_BP_USER {
 
 	public function get_users(){
 		$args = array( 
-			'role' => 'Subscriber'
+			'role' => isset( $_GET['role'] ) ? $_GET['role'] : 'Subscriber'
 		);
 		
 		// The Query
@@ -35,7 +35,7 @@ class Murrow_API_BP_USER {
 		// User Loop
 		$found_users = array();
 		if ( ! empty( $user_query->results ) ) {
-			if(isset($_GET['fields'])){
+			if( isset( $_GET['fields'] ) ){
 				$fields = array_merge( array( 'cached_profile_iw_object' ), explode( ',', $_GET['fields'] ) );
 			}else{
 				$fields = array( 'First name', 'Last name', 'City', 'State', 'Country', 'Bio', 'cached_profile_iw_object' );
