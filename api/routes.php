@@ -34,6 +34,7 @@ class Murrow_API_BP_USER {
 		
 		// User Loop
 		$found_users = array();
+		$users = array();
 		if ( ! empty( $user_query->results ) ) {
 			if( isset( $_GET['fields'] ) ){
 				$fields = array_merge( array( 'cached_profile_iw_object' ), explode( ',', $_GET['fields'] ) );
@@ -49,47 +50,47 @@ class Murrow_API_BP_USER {
 				$found_users[] = $tmp_data;
 				//var_dump( $user );
 			}
-		} else {
-			echo 'No users found.';
-		}/**/
-		$users = array();
-		$default_img = bp_core_avatar_default( 'local' ) ;
-		foreach( $found_users as $user ){
-			if( empty( $user['cached_profile_iw_object'] ) ){
-				$geocode=file_get_contents("http://maps.google.com/maps/api/geocode/json?address=".$user['City'].','.$user['State']."&sensor=false");
-				$output= json_decode($geocode);
-				//var_dump($output);die();
-				$lat = $output->results[0]->geometry->location->lat;
-				$lng = $output->results[0]->geometry->location->lng;
-				$first_name = substr($user['First name'], 0, 1);
-				
-				$profile_pic = bp_core_fetch_avatar( array( 'item_id' => $user['ID'], 'no_grav' => true, 'html' => false ) );
-				if($profile_pic!=$default_img){
-					$profile_pic='/wp-content/themes/connect.murrow.wsu.edu/images/default-profile.jpg';
+			$default_img = bp_core_avatar_default( 'local' ) ;
+			foreach( $found_users as $user ){
+				if( empty( $user['cached_profile_iw_object'] ) ){
+					$geocode=file_get_contents("http://maps.google.com/maps/api/geocode/json?address=".$user['City'].','.$user['State']."&sensor=false");
+					$output= json_decode($geocode);
+					//var_dump($output);die();
+					$lat = $output->results[0]->geometry->location->lat;
+					$lng = $output->results[0]->geometry->location->lng;
+					$first_name = substr($user['First name'], 0, 1);
+
+					$profile_pic = bp_core_fetch_avatar( array( 'item_id' => $user['ID'], 'no_grav' => true, 'html' => false ) );
+					if($profile_pic!=$default_img){
+						$profile_pic='/wp-content/themes/connect.murrow.wsu.edu/images/default-profile.jpg';
+					}
+
+					$tmp_data = (object) array(
+						'name' => $user['Last name'] . ($first_name!==false?', '.$first_name:''),
+						'profile_img' => $profile_pic,
+						'city' => $user['City'],
+						'state' => $user['State'],
+						'country' => $user['Country'],
+						'location' => array( 'lat' => "{$this->randomizeCord($lat)}",
+											'lon' => "{$this->randomizeCord($lng)}"
+										   ),
+						'bio' => !empty($user['Bio'])?$user['Bio']:'<p></p>'
+					);
+
+					$field_id = xprofile_get_field_id_from_name( 'cached_profile_iw_object' );
+					$field = new BP_XProfile_Field( $field_id );
+					$updated = xprofile_set_field_data( $field->id, $user['ID'], json_encode($tmp_data), false );
+
+					$users[] = $tmp_data;
+				}else{
+					$users[] = json_decode($user['cached_profile_iw_object']);
 				}
-				
-				$tmp_data = (object) array(
-					'name' => $user['Last name'] . ($first_name!==false?', '.$first_name:''),
-					'profile_img' => $profile_pic,
-					'city' => $user['City'],
-					'state' => $user['State'],
-					'country' => $user['Country'],
-					'location' => array( 'lat' => "{$this->randomizeCord($lat)}",
-										'lon' => "{$this->randomizeCord($lng)}"
-									   ),
-					'bio' => !empty($user['Bio'])?$user['Bio']:'<p></p>'
-				);
-				
-				$field_id = xprofile_get_field_id_from_name( 'cached_profile_iw_object' );
-				$field = new BP_XProfile_Field( $field_id );
-				$updated = xprofile_set_field_data( $field->id, $user['ID'], json_encode($tmp_data), false );
-				
-				$users[] = $tmp_data;
-			}else{
-				$users[] = json_decode($user['cached_profile_iw_object']);
 			}
-		}
-		
+		} else {
+			$users = (object) array(
+				'message' => 'No users found.'
+			);
+		}/**/
 		//var_dump( json_encode( $users ) );
 		//var_dump( 'end of user list' );die();
 		return $users;
