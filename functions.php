@@ -23,7 +23,19 @@ class WSU_MurrowConnect_Theme {
 	 * Setup the hooks used in the theme.
 	 */
 	public function __construct() {
-		
+		add_action( 'xprofile_updated_profile', array( $this, 'clear_profile_cache' ), 1, 1 );
 	}
+	
+	/**
+	 * Clear the profile object cache
+	 */
+	public function clear_profile_cache( $user_id ) {
+		xprofile_set_field_data( 'cached_profile_iw_object', $user_id, '' );
+		return;
+	}
+
+	
+	
+	
 }
 new WSU_MurrowConnect_Theme();

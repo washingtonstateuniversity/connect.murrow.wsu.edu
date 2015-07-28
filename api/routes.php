@@ -23,7 +23,10 @@ class Murrow_API_BP_USER {
 		// Add more custom routes here
 		return $routes;
 	}
-
+	
+	/**
+	* Outputs a json feed of users adn xprofile data
+	*/
 	public function get_users(){
 		$args = array( 
 			'role' => isset( $_GET['role'] ) ? $_GET['role'] : 'Subscriber'
@@ -37,6 +40,7 @@ class Murrow_API_BP_USER {
 		$users = array();
 		if ( ! empty( $user_query->results ) ) {
 			if( isset( $_GET['fields'] ) ){
+				//this is not complete, and needs to bypass the cache
 				$fields = array_merge( array( 'cached_profile_iw_object' ), explode( ',', $_GET['fields'] ) );
 			}else{
 				$fields = array( 'First name', 'Last name', 'City', 'State', 'Country', 'Bio', 'cached_profile_iw_object' );
