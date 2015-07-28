@@ -16,6 +16,13 @@ if ( defined( 'WP_CLI' ) && WP_CLI && !class_exists("BPCLI_Component")){
 require_once dirname( __FILE__ ) . '/api/routes.php';
 
 /**
+ * Set admin only readable BP profile fields
+ */
+require_once dirname( __FILE__ ) . '/includes/bp_admin_only_fields.php';
+
+
+
+/**
  * Set up the theme and functions related to Murrow Connect
  */
 class WSU_MurrowConnect_Theme {
