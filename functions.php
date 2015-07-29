@@ -21,6 +21,8 @@ require_once dirname( __FILE__ ) . '/api/routes.php';
 require_once dirname( __FILE__ ) . '/includes/bp_admin_only_fields.php';
 require_once dirname( __FILE__ ) . '/includes/bp_countries.php';
 require_once dirname( __FILE__ ) . '/includes/bp_states.php';
+require_once dirname( __FILE__ ) . '/includes/bp_profile_cache.php';
+
 
 /**
  * Set up the theme and functions related to Murrow Connect
